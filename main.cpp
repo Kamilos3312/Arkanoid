@@ -1,6 +1,4 @@
 #include "allegro.h"
-#include <iostream>
-#include <ctime>
 
 volatile int counter = 0;
 void increment() {counter++;}
@@ -65,7 +63,7 @@ int main()
 
             if (ball.x > paddle.x && (ball.x + 12) <= (paddle.x + 90) && (ball.y >= paddle.y))
                 {dy = -dy;  dy=-(rand()%3+3);}
-            else if (ball.y >= 450) {allegro_message("GAME OVER KUP SE ROWER"); exit(0);}
+            else if (ball.y >= 450) {allegro_message("GAME OVER"); exit(0);}
             counter--;
         }
 
@@ -75,7 +73,7 @@ int main()
         for (int i = 0; i <= n; i++)
             draw_sprite(buffer, blockImage, block[i].x, block[i].y);
 
-        blit(buffer, screen, 0, 0, 0, 0,screen->w, screen->h);
+        blit(buffer, screen, 0, 0, 0, 0, screen->w, screen->h);
         rest(20);
     }
 
@@ -83,6 +81,7 @@ int main()
 	destroy_bitmap(backgroundImage);
 	destroy_bitmap(ballImage);
 	destroy_bitmap(paddleImage);
+	destroy_bitmap(buffer);
 	allegro_exit();
 
 	return 0;
