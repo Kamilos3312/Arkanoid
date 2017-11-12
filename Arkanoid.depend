@@ -1,6 +1,5 @@
 # depslib dependency file v1.0
-1510424215 source:c:\users\kamil\documents\code blocks projects\arkanoid\main.cpp
+1510486917 source:c:\users\kamil\documents\code blocks projects\arkanoid\main.cpp
 	"allegro.h"
-	<iostream>
-	<ctime>
+	<stdio.h>
 

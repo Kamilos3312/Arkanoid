@@ -1,4 +1,5 @@
 #include "allegro.h"
+#include <stdio.h>
 
 volatile int counter = 0;
 void increment() {counter++;}
@@ -28,6 +29,8 @@ int main()
 	BITMAP *buffer = create_bitmap(screen->w, screen->h);
 
 	int dx = 6, dy = 5;
+	int score = 0;
+	char txt[50];
 	Point block[1000];
 	Point ball;
     Point paddle;
@@ -49,11 +52,11 @@ int main()
         {
             ball.x += dx;
             for (int i = 0; i < n; i++)
-                if (ball.x >= block[i].x && ball.x <= (block[i].x + 45) && ball.y >= block[i].y && ball.y <= (block[i].y + 20))  {block[i].x = -100; dx = -dx;}
+                if (ball.x >= block[i].x && ball.x <= (block[i].x + 45) && ball.y >= block[i].y && ball.y <= (block[i].y + 20))  {block[i].x = -100; score += 10; dx = -dx;}
 
             ball.y += dy;
             for (int i = 0; i < n; i++)
-                if (ball.x >= block[i].x && ball.x <= (block[i].x + 45) && ball.y >= block[i].y && ball.y <= (block[i].y + 20))  {block[i].x = -100; dy = -dy;}
+                if (ball.x >= block[i].x && ball.x <= (block[i].x + 45) && ball.y >= block[i].y && ball.y <= (block[i].y + 20))  {block[i].x = -100; score += 10; dy = -dy;}
 
             if (ball.x <= 0 || ball.x >= 708)  dx = -dx;
             if (ball.y <= 0)  dy = -dy;
@@ -63,7 +66,12 @@ int main()
 
             if (ball.x > paddle.x && (ball.x + 12) <= (paddle.x + 90) && (ball.y >= paddle.y))
                 {dy = -dy;  dy=-(rand()%3+3);}
-            else if (ball.y >= 450) {allegro_message("GAME OVER"); exit(0);}
+            else if (ball.y >= 450) {sprintf(txt, "GAME OVER\nScore: %d", score);   allegro_message(txt); exit(0);}
+
+            for (int i = 0; i <= n; i++){
+                if (block[i].x != -100) break;
+                sprintf(txt, "YOU WIN\nScore: %d", score);   allegro_message(txt); exit(0);
+            }
             counter--;
         }
 
